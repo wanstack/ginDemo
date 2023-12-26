@@ -9,7 +9,7 @@
 
 
 # 3.特别说明
-仅作为golang相关框架学习使用，使用gin框架目前实现了gorm和grpc的rbac认证相关功能
+仅作为golang相关框架学习使用，使用gin、gorm和grpc框架目前实现了rbac认证相关功能
 
 email：wanstack@163.com
 
