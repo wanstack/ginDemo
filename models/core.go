@@ -12,8 +12,6 @@ import (
 
 var DB *gorm.DB
 
-var err error
-
 func init() {
 	// 读取conf/app.ini 中的mysql配置
 	config, err := ini.Load("./conf/app.ini")

@@ -1,0 +1,19 @@
+syntax = "proto3";  //proto版本
+option go_package= "./helloService"; //表示在目录helloService下面生成hello.pb.go,以及对应的包名
+
+//通过service创建一个RPC服务, 生成一个Hello接口
+service Hello {  // Hello可以是小写, 无所谓
+  //通过rpc来指定远程调用的方法:
+  //SayHello方法, 这个方法里面实现对传入的参数HelloReq, 以及返回的参数HelloRes进行约束
+  rpc SayHello(HelloReq) returns (HelloRes);
+}
+
+// message 为传入的参数进行定义消息:结构体类型, 这样就要求客户端传入一个结构体,结构体有一个字符串类型的name参数
+message HelloReq {
+  string name = 1;
+}
+
+// message 为返回的参数进行定义消息:结构体类型, 这样就要求服务端返回一个结构体,结构体有一个字符串类型的message参数
+message HelloRes {
+  string message = 1;
+}
