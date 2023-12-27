@@ -1,0 +1,41 @@
+syntax = "proto3";  //proto版本
+option go_package= "./goodsService"; //表示在目录goodsService下面生成goods.pb.go,以及对应的包名
+
+//通过service创建一个RPC服务, 生成一个Goods接口, 服务端实现Goods里面的方法, 客户端调用
+service Goods {  // Goods可以是小写, 无所谓
+  //通过rpc来指定远程调用的方法:
+  //AddGoods方法:增加商品, 这个方法里面实现对传入的参数AddGoodsReq, 以及返回的参数AddGoodsRes进行约束
+  rpc AddGoods(AddGoodsReq) returns (AddGoodsRes);
+  //获取商品列表: GetGoodsReq 参数可为空, 返回参数GetGoodsRes是一个商品相关的切片
+  rpc GetGoods(GetGoodsReq) returns (GetGoodsRes);
+}
+
+//message: 因为增加商品,获取商品,都有商品的Title,Price,Content等数据,
+//故单独定义一个商品的结构体message, 让AddGoodsReq, GetGoodsRes调用
+message GoodsModel {
+  string title = 1;  //商品标题
+  double price = 2;  //价格
+  string content = 3;  //内容
+}
+
+// message 为传入的参数进行定义消息:结构体类型, 这样就要求客户端传入一个结构体,结构体有一个字符串类型的name参数
+// AddGoodsReq:增加商品
+message AddGoodsReq {
+  GoodsModel goods = 1; // 定义一个GoodsModel的切片message
+}
+
+// message 为返回的参数进行定义消息:结构体类型, 这样就要求服务端返回一个结构体,结构体有一个字符串类型的message参数
+message AddGoodsRes {
+  string message = 1;  // 返回结果描述: 成功的描述以及失败的描述
+  bool success = 2;  //返回结果标识: 是否成功
+}
+
+//message: 获取商品的请求参数message, 可以为空
+message GetGoodsReq {
+
+}
+
+//message: 获取商品返回的参数结果
+message GetGoodsRes {
+  repeated GoodsModel goodsList = 1; // 返回的是一个商品相关的切片
+}
